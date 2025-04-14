@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('cantidad');
             $table->decimal('preciototal', 8, 2);
             $table->unsignedBigInteger('iduser');
+            $table->string('estado')->default('activo');
             $table->timestamps();
 
             $table->foreign('idproducto')->references('id')->on('productos')->onDelete('cascade');

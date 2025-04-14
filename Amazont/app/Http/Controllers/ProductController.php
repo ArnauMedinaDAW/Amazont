@@ -27,7 +27,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) 
+    public function store(Request $request)
     {
         try {
             $request->validate([
@@ -38,10 +38,9 @@ class ProductController extends Controller
                 'categoria_id' => 'required|exists:categorias,id',
                 'nota' => 'nullable|numeric|min:0|max:5'
             ]);
-            
+
             $producto = Producto::create($request->all());
-            
-            // Devolver los mismos datos que ingresaron
+
             return response()->json($request->all(), 201);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 422);
@@ -78,7 +77,7 @@ class ProductController extends Controller
             'categoria_id' => 'sometimes|exists:categorias,id',
             'nota' => 'nullable|numeric|min:0|max:5'
         ]);
-        
+
         $producto->update($request->all());
         return response()->json($producto);
     }
@@ -90,4 +89,17 @@ class ProductController extends Controller
         Producto::destroy($id);
         return response()->json(['message' => 'Producto eliminado'], 200);
     }
+
+    public function opiniones($id)
+    {
+    $producto = Producto::findOrFail($id);
+    return response()->json($producto->opiniones);
+    }
+
+    public function valoraciones($id)
+    {
+    $producto = Producto::findOrFail($id);
+    return response()->json($producto->valoraciones);
+    }
+
 }

@@ -12,6 +12,7 @@ class Producto extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'imagen',
         'precio',
         'stock',
         'nota',
@@ -25,5 +26,14 @@ class Producto extends Model
     public function carritos()
     {
         return $this->hasMany(Carrito::class, 'idproducto');
+    }
+    public function opiniones()
+    {
+        return $this->hasMany(Opinion::class);
+    }
+
+    public function valoraciones()
+    {
+        return $this->hasMany(Valoracion::class);
     }
 }

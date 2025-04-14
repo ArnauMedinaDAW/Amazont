@@ -10,7 +10,7 @@ class Carrito extends Model
     use HasFactory;
 
     protected $fillable = [
-        'idproducto', 'cantidad', 'preciototal', 'iduser',
+        'idproducto', 'cantidad', 'preciototal', 'iduser', 'estado',
     ];
 
     public function user()

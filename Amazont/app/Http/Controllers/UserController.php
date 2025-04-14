@@ -24,16 +24,16 @@ use Illuminate\Support\Facades\Hash;
                     'nick' => 'required|string',
                     'password' => 'required|string|min:6',
                 ]);
-        
+
                 $user = User::where('nick', $request->nick)->first();
-        
+
                 if ($user && Hash::check($request->password, $user->password)) {
                     return response()->json(['message' => 'Usuario autenticado correctamente'], 200);
                 } else {
                     return response()->json(['message' => 'Credenciales incorrectas'], 401);
                 }
             }
-            
+
             /**
              * Show the form for creating a new resource.
              */
@@ -50,13 +50,13 @@ use Illuminate\Support\Facades\Hash;
                 $request->validate([
                     'nick' => 'required|string',
                     'email' => 'required|string|email|unique:users',
-                    'password' => 'required|string|min:6', // No hace falta "string" para el hash
+                    'password' => 'required|string|min:6',
                     'role' => 'required|string'
                 ]);
-            
+
                 $data = $request->all();
                 $data['password'] = bcrypt($data['password']); // Hashear la contraseña
-            
+
                 // Crear el usuario con los datos validados
                 $user = User::create($data);
                 return response()->json($user, 201);
