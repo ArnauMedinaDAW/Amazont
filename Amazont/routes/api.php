@@ -47,3 +47,5 @@ Route::apiResource('metodoPago', MetodoPagoController::class);
 Route::put('/user/{id}/direccion', [UserController::class, 'actualizarDireccion']);
 Route::put('/carrito/{id}/finalizar', [CarritoController::class, 'finalizar']);
 
+
+
