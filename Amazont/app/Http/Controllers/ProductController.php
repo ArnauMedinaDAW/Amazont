@@ -102,4 +102,12 @@ class ProductController extends Controller
     return response()->json($producto->valoraciones);
     }
 
+    public function getByCategoria($categoriaId)
+    {
+        $productos = Producto::with('categoria')
+            ->where('categoria_id', $categoriaId)
+            ->get();
+
+        return response()->json($productos);
+    }
 }
