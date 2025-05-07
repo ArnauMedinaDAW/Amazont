@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 
         class UserController extends Controller
@@ -94,5 +95,22 @@ use Illuminate\Support\Facades\Hash;
                 User::destroy($id);
                 return response()->json(['message' => 'Usuari eliminat i carritos associats eliminats'], 200);
             }
+
+            public function actualizarDireccion(Request $request, $id)
+            {
+                $request->validate([
+                    'direccion_envio' => 'required|string|max:255',
+                ]);
+
+                $usuario = User::findOrFail($id);
+
+                $usuario->direccion_envio = $request->direccion_envio;
+                $usuario->save(); // Afegim aquesta línia per guardar els canvis
+
+                return response()->json(['mensaje' => 'Direcció actualitzada correctament']);
+            }
+
+
+
         }
 

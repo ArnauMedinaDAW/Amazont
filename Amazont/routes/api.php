@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\ValoracionController;
+use App\Http\Controllers\MetodoPagoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,3 +43,11 @@ Route::get('products/{id}/valoraciones', [ProductController::class, 'valoracione
 Route::get('/carrito/activo/{iduser}', [CarritoController::class, 'carritoActivo']);
 Route::get('/carrito/historial/{iduser}', [CarritoController::class, 'historial']);
 Route::put('/carrito/finalizar/{iduser}', [CarritoController::class, 'finalizarCompra']);
+
+Route::apiResource('metodoPago', MetodoPagoController::class);
+
+Route::put('/user/{id}/direccion', [UserController::class, 'actualizarDireccion']);
+Route::put('/carrito/{id}/finalizar', [CarritoController::class, 'finalizar']);
+
+
+

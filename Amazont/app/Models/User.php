@@ -14,6 +14,7 @@ class User extends Model
         'email',
         'password',
         'role',
+        'direccion_envio',
     ];
 
     public function carritos()
