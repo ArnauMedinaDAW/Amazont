@@ -25,30 +25,67 @@ class CarritoController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request) {
         $request->validate([
             'idproducto' => 'required|exists:productos,id',
             'cantidad' => 'required|integer|min:1',
             'iduser' => 'required|exists:users,id'
         ]);
-
+    
         $producto = Producto::findOrFail($request->idproducto);
-        $preciototal = $producto->precio * $request->cantidad;
-
-        $carrito = Carrito::create([
-            'idproducto' => $request->idproducto,
-            'cantidad' => $request->cantidad,
-            'preciototal' => $preciototal,
-            'iduser' => $request->iduser,
-            'estado' => 'activo'
-        ]);
-
-        return response()->json($carrito, 201);
+    
+        // Buscar si ya existe un producto en el carrito para este usuario y activo
+        $carrito = Carrito::where('idproducto', $request->idproducto)
+                          ->where('iduser', $request->iduser)
+                          ->where('estado', 'activo')
+                          ->first();
+    
+        if ($carrito) {
+            // Si existe, actualizamos la cantidad y el preciototal
+            $carrito->cantidad += $request->cantidad;
+            $carrito->preciototal = $producto->precio * $carrito->cantidad;
+            $carrito->save();
+            return response()->json($carrito, 200);
+        } else {
+            // Si no existe, creamos uno nuevo
+            $preciototal = $producto->precio * $request->cantidad;
+    
+            $carrito = Carrito::create([
+                'idproducto' => $request->idproducto,
+                'cantidad' => $request->cantidad,
+                'preciototal' => $preciototal,
+                'iduser' => $request->iduser,
+                'estado' => 'activo'
+            ]);
+    
+            return response()->json($carrito, 201);
+        }
     }
-
+    
+    public function actualizarCantidad(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:carritos,id',
+            'cantidad' => 'required|integer|min:1'
+        ]);
+    
+        // Obtener el carrito
+        $carrito = Carrito::findOrFail($request->id);
+    
+        // Obtener el producto relacionado
+        $producto = Producto::findOrFail($carrito->idproducto);
+    
+        // Actualizar la cantidad y calcular el nuevo precio total
+        $carrito->cantidad = $request->cantidad;
+        $carrito->preciototal = $producto->precio * $request->cantidad;
+        $carrito->save();
+    
+        return response()->json([
+            'message' => 'Carrito actualizado correctamente',
+            'carrito' => $carrito
+        ]);
+    }
+    
     /**
      * Display the specified resource.
      */

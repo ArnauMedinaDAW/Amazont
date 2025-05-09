@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Auth;
                 $user = User::where('nick', $request->nick)->first();
 
                 if ($user && Hash::check($request->password, $user->password)) {
-                    return response()->json(['message' => 'Usuario autenticado correctamente'], 200);
+                   return response()->json($user);
                 } else {
                     return response()->json(['message' => 'Credenciales incorrectas'], 401);
                 }
@@ -109,8 +109,6 @@ use Illuminate\Support\Facades\Auth;
 
                 return response()->json(['mensaje' => 'Direcció actualitzada correctament']);
             }
-
-
 
         }
 
