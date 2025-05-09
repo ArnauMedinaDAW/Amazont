@@ -6,6 +6,7 @@ use App\Models\Carrito;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 
+
 class CarritoController extends Controller
 {
     /**

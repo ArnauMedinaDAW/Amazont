@@ -23,10 +23,15 @@ class Producto extends Model
     {
         return $this->belongsTo(Categoria::class, 'categoria_id');
     }
+
     public function carritos()
     {
         return $this->hasMany(Carrito::class, 'idproducto');
     }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     public function opiniones()
     {
         return $this->hasMany(Opinion::class);

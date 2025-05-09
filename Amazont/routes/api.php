@@ -6,7 +6,10 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\OpinionController;
 use App\Http\Controllers\ValoracionController;
+<<<<<<< Updated upstream
 use App\Http\Controllers\MetodoPagoController;
+=======
+>>>>>>> Stashed changes
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +47,7 @@ Route::get('carrito/user/{userId}', [CarritoController::class, 'userCarrito']);
 Route::apiResource('opiniones', OpinionController::class);
 Route::apiResource('valoraciones', ValoracionController::class);
 
+<<<<<<< Updated upstream
 Route::get('products/{id}/opiniones', [ProductController::class, 'opiniones']);
 Route::get('products/{id}/valoraciones', [ProductController::class, 'valoraciones']);
 
@@ -56,3 +60,7 @@ Route::put('/carrito/{id}/finalizar', [CarritoController::class, 'finalizar']);
 
 
 
+=======
+Route::get('productos/{id}/opiniones', [ProductController::class, 'opiniones']);
+Route::get('productos/{id}/valoraciones', [ProductController::class, 'valoraciones']);
+>>>>>>> Stashed changes
