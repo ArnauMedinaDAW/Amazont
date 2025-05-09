@@ -174,5 +174,20 @@ class CarritoController extends Controller
 
     return response()->json($historial);
     }
+    public function eliminarVarios(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array|min:1',
+            'ids.*' => 'integer|exists:carritos,id',
+        ]);
+
+        Carrito::whereIn('id', $request->ids)->delete();
+
+        return response()->json([
+            'message' => 'Carritos eliminados correctamente',
+            'ids_eliminados' => $request->ids
+        ]);
+    }
+
 
 }
