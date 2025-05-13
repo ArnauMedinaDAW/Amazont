@@ -110,5 +110,32 @@ use Illuminate\Support\Facades\Auth;
                 return response()->json(['mensaje' => 'Direcció actualitzada correctament']);
             }
 
+            public function actualizarPerfil(Request $request)
+            {
+                $request->validate([
+                    'id' => 'required|exists:users,id',
+                ]);
+
+                $user = User::findOrFail($request->id);
+
+                // Asignación directa de los campos si están presentes en la request
+                if ($request->has('nick')) {
+                    $user->nick = $request->nick;
+                }
+                if ($request->has('email')) {
+                    $user->email = $request->email;
+                }
+                if ($request->has('direccion_envio')) {
+                    $user->direccion_envio = $request->direccion_envio;
+                }
+
+                $user->save();
+
+                return response()->json([
+                    'message' => 'Perfil actualizado correctamente',
+                    'user' => $user
+                ]);
+            }
+
         }
 
