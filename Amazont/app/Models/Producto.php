@@ -28,6 +28,10 @@ class Producto extends Model
     {
         return $this->hasMany(Carrito::class, 'idproducto');
     }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     public function opiniones()
     {
         return $this->hasMany(Opinion::class);
