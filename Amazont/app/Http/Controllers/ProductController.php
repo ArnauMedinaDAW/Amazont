@@ -90,23 +90,14 @@ class ProductController extends Controller
         return response()->json(['message' => 'Producto eliminado'], 200);
     }
 
-<<<<<<< Updated upstream
     public function opiniones($id)
     {
     $producto = Producto::findOrFail($id);
     return response()->json($producto->opiniones);
-=======
-    
-    public function opiniones($id)
-    {
-        $producto = Producto::findOrFail($id);
-        return response()->json($producto->opiniones);
->>>>>>> Stashed changes
-    }
+    }    
 
     public function valoraciones($id)
     {
-<<<<<<< Updated upstream
     $producto = Producto::findOrFail($id);
     return response()->json($producto->valoraciones);
     }
@@ -119,10 +110,6 @@ class ProductController extends Controller
 
         return response()->json($productos);
     }
-=======
-        $producto = Producto::findOrFail($id);
-        return response()->json($producto->valoraciones);
-    }
 
->>>>>>> Stashed changes
+
 }
