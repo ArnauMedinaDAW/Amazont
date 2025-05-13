@@ -118,7 +118,6 @@ use Illuminate\Support\Facades\Auth;
 
                 $user = User::findOrFail($request->id);
 
-                // Asignación directa de los campos si están presentes en la request
                 if ($request->has('nick')) {
                     $user->nick = $request->nick;
                 }
@@ -133,6 +132,27 @@ use Illuminate\Support\Facades\Auth;
 
                 return response()->json([
                     'message' => 'Perfil actualizado correctamente',
+                    'user' => $user
+                ]);
+            }
+
+
+            public function actualizarContra(Request $request)
+            {
+                $request->validate([
+                    'id' => 'required|exists:users,id',
+                ]);
+
+                $user = User::findOrFail($request->id);
+
+                if ($request->has('password')) {
+                    $user->password = Hash::make($request->password);
+                }
+
+                $user->save();
+
+                return response()->json([
+                    'message' => 'Contraseña actualizada correctamente',
                     'user' => $user
                 ]);
             }
