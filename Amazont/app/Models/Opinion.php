@@ -10,8 +10,11 @@ class Opinion extends Model
     use HasFactory;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     protected $table = 'opiniones';
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     protected $fillable = ['producto_id', 'comentario'];
