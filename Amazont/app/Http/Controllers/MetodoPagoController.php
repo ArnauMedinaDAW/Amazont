@@ -7,17 +7,16 @@ use App\Models\MetodoPago;
 
 class MetodoPagoController extends Controller
 {
-
     public function index()
     {
         $metodos = MetodoPago::all();
-        return response()->json(['metodos' => $metodos]);
+        return response()->json($metodos);
     }
 
     public function show($id)
     {
         $metodo = MetodoPago::findOrFail($id);
-        return response()->json(['metodo' => $metodo]);
+        return response()->json($metodo);
     }
 
     public function store(Request $request)
@@ -32,7 +31,10 @@ class MetodoPagoController extends Controller
 
         $metodo = MetodoPago::create($request->all());
 
-        return response()->json(['mensaje' => 'Método de pago creado', 'metodo' => $metodo]);
+        return response()->json([
+            'mensaje' => 'Método de pago creado',
+            'data' => $metodo
+        ]);
     }
 
     public function update(Request $request, $id)
@@ -48,7 +50,10 @@ class MetodoPagoController extends Controller
         $metodo = MetodoPago::findOrFail($id);
         $metodo->update($request->all());
 
-        return response()->json(['mensaje' => 'Método de pago actualizado', 'metodo' => $metodo]);
+        return response()->json([
+            'mensaje' => 'Método de pago actualizado',
+            'data' => $metodo
+        ]);
     }
 
     public function destroy($id)
@@ -56,6 +61,9 @@ class MetodoPagoController extends Controller
         $metodo = MetodoPago::findOrFail($id);
         $metodo->delete();
 
-        return response()->json(['mensaje' => 'Método de pago eliminado']);
+        return response()->json([
+            'mensaje' => 'Método de pago eliminado',
+            'data' => $metodo
+        ]);
     }
 }
