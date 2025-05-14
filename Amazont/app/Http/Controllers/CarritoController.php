@@ -32,15 +32,15 @@ class CarritoController extends Controller
             'cantidad' => 'required|integer|min:1',
             'iduser' => 'required|exists:users,id'
         ]);
-    
+
         $producto = Producto::findOrFail($request->idproducto);
-    
+
         // Buscar si ya existe un producto en el carrito para este usuario y activo
         $carrito = Carrito::where('idproducto', $request->idproducto)
                           ->where('iduser', $request->iduser)
                           ->where('estado', 'activo')
                           ->first();
-    
+
         if ($carrito) {
             // Si existe, actualizamos la cantidad y el preciototal
             $carrito->cantidad += $request->cantidad;
@@ -50,7 +50,7 @@ class CarritoController extends Controller
         } else {
             // Si no existe, creamos uno nuevo
             $preciototal = $producto->precio * $request->cantidad;
-    
+
             $carrito = Carrito::create([
                 'idproducto' => $request->idproducto,
                 'cantidad' => $request->cantidad,
@@ -58,35 +58,35 @@ class CarritoController extends Controller
                 'iduser' => $request->iduser,
                 'estado' => 'activo'
             ]);
-    
+
             return response()->json($carrito, 201);
         }
     }
-    
+
     public function actualizarCantidad(Request $request)
     {
         $request->validate([
             'id' => 'required|exists:carritos,id',
             'cantidad' => 'required|integer|min:1'
         ]);
-    
+
         // Obtener el carrito
         $carrito = Carrito::findOrFail($request->id);
-    
+
         // Obtener el producto relacionado
         $producto = Producto::findOrFail($carrito->idproducto);
-    
+
         // Actualizar la cantidad y calcular el nuevo precio total
         $carrito->cantidad = $request->cantidad;
         $carrito->preciototal = $producto->precio * $request->cantidad;
         $carrito->save();
-    
+
         return response()->json([
             'message' => 'Carrito actualizado correctamente',
-            'carrito' => $carrito
+            'data' => $carrito
         ]);
     }
-    
+
     /**
      * Display the specified resource.
      */
@@ -116,7 +116,10 @@ class CarritoController extends Controller
 
         if ($request->cantidad == 0) {
             $carrito->delete();
-            return response()->json(['message' => 'Producte eliminat del carret']);
+            return response()->json([
+                'message' => 'Producte eliminat del carret',
+                'data' => null
+            ]);
         }
 
         $producto = $carrito->producto;
@@ -131,8 +134,12 @@ class CarritoController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy($id) {
-        Carrito::destroy($id);
-        return response()->json(['message' => 'Carrito eliminat'], 200);
+        $carrito = Carrito::findOrFail($id);
+        $carrito->delete();
+        return response()->json([
+            'message' => 'Carrito eliminat',
+            'data' => $carrito
+        ], 200);
     }
 
     /**
@@ -148,11 +155,18 @@ class CarritoController extends Controller
 
 
     public function finalizarCompra($iduser) {
+        $carritos = Carrito::where('iduser', $iduser)
+                          ->where('estado', 'activo')
+                          ->get();
+
         Carrito::where('iduser', $iduser)
                ->where('estado', 'activo')
                ->update(['estado' => 'finalizado']);
 
-        return response()->json(['message' => 'Compra finalitzada correctament']);
+        return response()->json([
+            'message' => 'Compra finalitzada correctament',
+            'data' => $carritos
+        ]);
     }
 
 
@@ -181,13 +195,12 @@ class CarritoController extends Controller
             'ids.*' => 'integer|exists:carritos,id',
         ]);
 
+        $carritos = Carrito::whereIn('id', $request->ids)->get();
         Carrito::whereIn('id', $request->ids)->delete();
 
         return response()->json([
             'message' => 'Carritos eliminados correctamente',
-            'ids_eliminados' => $request->ids
+            'data' => $carritos
         ]);
     }
-
-
 }
