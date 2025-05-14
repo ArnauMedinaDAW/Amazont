@@ -56,3 +56,7 @@ Route::get('productos/{id}/valoraciones', [ProductController::class, 'valoracion
 Route::post('auth/actualizar-perfil', [UserController::class, 'actualizarPerfil']);
 
 Route::post('auth/actualizar-contra', [UserController::class, 'actualizarContra']);
+
+Route::get('/metodoPago/user/{userId}', [MetodoPagoController::class, 'getByUserId']);
+
+Route::post('/metodoPago/user/{userId}', [MetodoPagoController::class, 'guardarMetodoPago']);

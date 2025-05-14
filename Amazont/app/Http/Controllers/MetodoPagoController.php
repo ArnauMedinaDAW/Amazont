@@ -19,6 +19,12 @@ class MetodoPagoController extends Controller
         return response()->json($metodo);
     }
 
+    public function getByUserId($userId)
+    {
+        $metodos = MetodoPago::where('user_id', $userId)->get();
+        return response()->json($metodos);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -27,6 +33,7 @@ class MetodoPagoController extends Controller
             'num_tarjeta' => 'nullable|string',
             'fecha_caducidad' => 'nullable|string',
             'codigo_validacion' => 'nullable|string',
+            'user_id' => 'required|integer'  // Changed from 'string' to 'integer'
         ]);
 
         $metodo = MetodoPago::create($request->all());
@@ -63,6 +70,35 @@ class MetodoPagoController extends Controller
 
         return response()->json([
             'mensaje' => 'Método de pago eliminado',
+            'data' => $metodo
+        ]);
+    }
+
+    /**
+     * Save a payment method for a specific user
+     */
+    public function guardarMetodoPago(Request $request, $userId)
+    {
+        $request->validate([
+            'tipo' => 'required|string',
+            'nombre' => 'nullable|string',
+            'num_tarjeta' => 'nullable|string',
+            'fecha_caducidad' => 'nullable|string',
+            'codigo_validacion' => 'nullable|string',
+        ]);
+
+        // Create the payment method with the user_id from the URL
+        $metodo = MetodoPago::create([
+            'tipo' => $request->tipo,
+            'nombre' => $request->nombre,
+            'num_tarjeta' => $request->num_tarjeta,
+            'fecha_caducidad' => $request->fecha_caducidad,
+            'codigo_validacion' => $request->codigo_validacion,
+            'user_id' => $userId
+        ]);
+
+        return response()->json([
+            'mensaje' => 'Método de pago creado',
             'data' => $metodo
         ]);
     }

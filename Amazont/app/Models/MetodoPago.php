@@ -12,7 +12,7 @@ class MetodoPago extends Model
     protected $primaryKey = 'id_metodo';
 
     protected $fillable = [
-        'tipo', 'nombre', 'num_tarjeta', 'fecha_caducidad', 'codigo_validacion'
+        'tipo', 'nombre', 'num_tarjeta', 'fecha_caducidad', 'codigo_validacion', 'user_id'
     ];
 
     public function setNumTarjetaAttribute($value)
