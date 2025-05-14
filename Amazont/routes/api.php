@@ -46,6 +46,8 @@ Route::get('carrito/user/{userId}', [CarritoController::class, 'userCarrito']);
 Route::apiResource('opiniones', OpinionController::class);
 Route::apiResource('valoraciones', ValoracionController::class);
 
+Route::apiResource('metodoPago', MetodoPagoController::class);
+
 Route::get('productos/{id}/opiniones', [ProductController::class, 'opiniones']);
 Route::get('productos/{id}/valoraciones', [ProductController::class, 'valoraciones']);
 Route::get('productos/{id}/valoraciones', [ProductController::class, 'valoraciones']);
