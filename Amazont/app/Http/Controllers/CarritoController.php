@@ -154,20 +154,43 @@ class CarritoController extends Controller
     }
 
 
+<<<<<<< Updated upstream
     public function finalizarCompra($iduser) {
         $carritos = Carrito::where('iduser', $iduser)
                           ->where('estado', 'activo')
                           ->get();
 
+=======
+    public function finalizarCompra($iduser)
+    {
+        // Obtener todos los carritos activos del usuario
+        $carritos = Carrito::where('iduser', $iduser)
+                        ->where('estado', 'activo')
+                        ->get();
+
+        foreach ($carritos as $carrito) {
+            // Obtener el producto relacionado
+            $producto = Producto::find($carrito->idproducto);
+
+            if ($producto) {
+                // Restar la cantidad del carrito al stock
+                $nuevoStock = $producto->stock - $carrito->cantidad;
+                $producto->update(['stock' => max($nuevoStock, 0)]); // Evitar stock negativo
+            }
+        }
+
+        // Actualizar todos los carritos a 'finalizado' de una sola vez
+>>>>>>> Stashed changes
         Carrito::where('iduser', $iduser)
-               ->where('estado', 'activo')
-               ->update(['estado' => 'finalizado']);
+            ->where('estado', 'activo')
+            ->update(['estado' => 'finalizado']);
 
         return response()->json([
             'message' => 'Compra finalitzada correctament',
             'data' => $carritos
         ]);
     }
+
 
 
     public function carritoActivo($iduser) {
