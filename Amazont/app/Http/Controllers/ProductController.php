@@ -67,7 +67,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'nombre' => 'sometimes|string|max:255',
@@ -78,9 +78,13 @@ class ProductController extends Controller
             'nota' => 'nullable|numeric|min:0|max:5'
         ]);
 
+        $producto = Producto::findOrFail($id);
         $producto->update($request->all());
+
         return response()->json($producto);
     }
+
+
 
     /**
      * Remove the specified resource from storage.

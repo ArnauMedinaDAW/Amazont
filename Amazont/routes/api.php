@@ -50,8 +50,6 @@ Route::apiResource('metodoPago', MetodoPagoController::class);
 
 Route::get('productos/{id}/opiniones', [ProductController::class, 'opiniones']);
 Route::get('productos/{id}/valoraciones', [ProductController::class, 'valoraciones']);
-Route::get('productos/{id}/valoraciones', [ProductController::class, 'valoraciones']);
-Route::get('productos/{id}/valoraciones', [ProductController::class, 'valoraciones']);
 
 Route::post('auth/actualizar-perfil', [UserController::class, 'actualizarPerfil']);
 
