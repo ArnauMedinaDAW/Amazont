@@ -9,18 +9,13 @@ use Illuminate\Http\Request;
 
 class CarritoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $carritos = Carrito::with(['user', 'producto'])->get();
         return response()->json($carritos);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
@@ -87,25 +82,16 @@ class CarritoController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id) {
         $carrito = Carrito::with(['user', 'producto'])->findOrFail($id);
         return response()->json($carrito);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Carrito $carrito)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -130,9 +116,6 @@ class CarritoController extends Controller
         return response()->json($carrito);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id) {
         $carrito = Carrito::findOrFail($id);
         $carrito->delete();
@@ -142,9 +125,6 @@ class CarritoController extends Controller
         ], 200);
     }
 
-    /**
-     * Display carts by user ID.
-     */
     public function userCarrito($userId)
     {
         $carritos = Carrito::with(['producto'])
@@ -153,8 +133,11 @@ class CarritoController extends Controller
         return response()->json($carritos);
     }
 
+<<<<<<< Updated upstream
 
 <<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
     public function finalizarCompra($iduser) {
         $carritos = Carrito::where('iduser', $iduser)
                           ->where('estado', 'activo')
