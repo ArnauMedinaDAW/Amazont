@@ -134,8 +134,11 @@ class CarritoController extends Controller
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 <<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     public function finalizarCompra($iduser) {
