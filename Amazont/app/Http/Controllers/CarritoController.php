@@ -154,13 +154,6 @@ class CarritoController extends Controller
     }
 
 
-<<<<<<< Updated upstream
-    public function finalizarCompra($iduser) {
-        $carritos = Carrito::where('iduser', $iduser)
-                          ->where('estado', 'activo')
-                          ->get();
-
-=======
     public function finalizarCompra($iduser)
     {
         // Obtener todos los carritos activos del usuario
@@ -180,7 +173,6 @@ class CarritoController extends Controller
         }
 
         // Actualizar todos los carritos a 'finalizado' de una sola vez
->>>>>>> Stashed changes
         Carrito::where('iduser', $iduser)
             ->where('estado', 'activo')
             ->update(['estado' => 'finalizado']);
